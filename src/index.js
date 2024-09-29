@@ -6,6 +6,10 @@ console.log(data);
 
 const cardList = document.querySelector(".cards");
 
+function renderFilterDropDown() {
+
+}
+
 function renderPokemonCards() {
     cardList.innerHTML = '';
 
@@ -24,6 +28,31 @@ function renderPokemonCards() {
         img.src = pokemon.sprites.front_default;
         li.appendChild(img);
 
+        const select = document.createElement('select');
+
+        const spriteOptions = {
+            'Front Default': pokemon.sprites.front_default,
+            'Back Default': pokemon.sprites.back_default,
+            'Front Shiny': pokemon.sprites.front_shiny,
+            'Back Shiny': pokemon.sprites.back_shiny,
+            'Dream World': pokemon.sprites.other['dream_world'].front_default,
+            'Official Artwork': pokemon.sprites.other['official-artwork'].front_default
+        };
+
+        for (let [label, url] of Object.entries(spriteOptions)) {
+            if (url) { 
+                const option = document.createElement('option');
+                option.value = url;
+                option.text = label;
+                select.appendChild(option);
+            }
+        }
+
+        select.addEventListener('change', (event) => {
+            img.src = event.target.value;
+        });
+        li.appendChild(select);
+
         const ul = document.createElement('ul');
         ul.className = 'card--text';
         pokemon.stats.forEach((stat) => {
@@ -41,7 +70,6 @@ function renderPokemonCards() {
             game.version.name
         );
 
-        // Set the text content of the div to the joined game names
         gameDiv.innerText += gameNames.join(', ');
         li.appendChild(gameDiv);
 
