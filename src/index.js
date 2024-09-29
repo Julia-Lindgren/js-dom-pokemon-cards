@@ -31,7 +31,19 @@ function renderPokemonCards() {
             statli.innerText = `${stat.stat.name.toUpperCase()}: ${stat.base_stat}`
             ul.appendChild(statli);
         })
+
         li.appendChild(ul);
+
+        const gameDiv = document.createElement('div');
+        gameDiv.innerText = 'Games: ';
+
+        const gameNames = pokemon.game_indices.map(game => 
+            game.version.name
+        );
+
+        // Set the text content of the div to the joined game names
+        gameDiv.innerText += gameNames.join(', ');
+        li.appendChild(gameDiv);
 
         cardList.appendChild(li);
     });
